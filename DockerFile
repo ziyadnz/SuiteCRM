@@ -1,0 +1,18 @@
+# FROM phpdockerio/php74-cli
+FROM ubuntu:bionic
+FROM php:7.3.3-apache
+RUN apt-get update && apt-get upgrade -y
+RUN apk update && apk add curl && \
+  curl -sS https://getcomposer.org/installer | php \
+  && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
+RUN sudo apt install composer
+RUN  composer install --no-dev
+RUN docker-php-ext-install mysqli
+EXPOSE 80
+# WORKDIR /app
+
+# ENV PORT=8080
+
+# EXPOSE 8080
+
+# CMD ["apache2", "start"]
