@@ -167,7 +167,7 @@ $sqle = $conn->prepare("INSERT INTO email_addresses (id,email_address,date_creat
         <div class="form-group"> 
             <label for="phone_mobile">Telefon No</label>
         <span class="error"  style="color:red">(zorunlu)</span>  
-        <input type="text" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"  class="form-control" id="phone_mobile"
+        <input type="number" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*?)\..*/g, '$1');"  class="form-control" id="phone_mobile"
             name="phone_mobile" aria-describedby="emailHelp" required>    
         </div>
 
@@ -186,20 +186,20 @@ $sqle = $conn->prepare("INSERT INTO email_addresses (id,email_address,date_creat
     });
 </script>
 <label for="phone_fax">Açıklama</label>
-                 <span class="error"  style="color:red">(zorunlu)</span>  
+                 <span class="error"  style="color:red">(zorunlu)</span> Bilgi almak istediğiniz konuyu kısaca belirtiniz. 
 
         <br>
 <textarea name="phone_fax" id="phone_fax" style="width:800px;" rows="3" maxlength="99" type="text" required></textarea>
     
             <small id="emailHelp" class="form-text text-muted">
-            100 karakter yazabilirsiniz.
+            100 karakter ile sınırlıdır.
             </small> 
         </div>
 
 <div style="text-align:center">
          <input type="checkbox" id="KVKK" name="KVKK" value="KVKK" required>
   <label for="vehicle1"> <a href="https://akademi-tr.agu.edu.tr/uploads/KVKK_akademi/kvkk%20ayd%C4%B1nlatma_acik_riza_metni.pdf?_t=1640162186" 
-  target="_blank">KVKK'yı</a> okudum ve onaylıyorum. <span style="color:#FF0000">(zorunlu)</span> </label><br>  
+  target="_blank">KVKK'yı</a> okudum ve onaylıyorum.  </label><br>  
 
 </div>
 
