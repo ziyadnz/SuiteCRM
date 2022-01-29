@@ -16,6 +16,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     $phone_fax = $_POST["phone_fax"]; 
     $id = md5(uniqid());
     $date=date("Y-m-d h:i:s");
+    $aday="aday";
    
 
             /*
@@ -35,8 +36,8 @@ if($_SERVER["REQUEST_METHOD"] == "POST") {
     // This sql query is use to check if
     // the username is already present 
     // or not in our Database
-$sql = $conn->prepare("INSERT INTO contacts (id,first_name, last_name,date_entered,phone_mobile,description)
-            VALUES (:id, :first_name, :last_name,:date_entered, :phone_mobile, :phone_fax )");
+$sql = $conn->prepare("INSERT INTO contacts (id,first_name, last_name,date_entered,phone_mobile,description,primary_address_city,department,phone_fax,title)
+            VALUES (:id, :first_name, :last_name,:date_entered, :phone_mobile, :phone_fax,:secilenil,:liseadi,:secilensinif,:aday)");
 
             $sql->bindParam('id', $id);
             $sql->bindParam('first_name', $_POST["first_name"]);
@@ -44,6 +45,13 @@ $sql = $conn->prepare("INSERT INTO contacts (id,first_name, last_name,date_enter
             $sql->bindParam('phone_mobile', $_POST["phone_mobile"]);
             $sql->bindParam('phone_fax', $_POST["phone_fax"]);
             $sql->bindParam('date_entered', $date);
+            $sql->bindParam('secilenil', $_POST["secilenil"]);
+            $sql->bindParam('liseadi', $_POST["liseadi"]);
+            $sql->bindParam('secilensinif', $_POST["secilensinif"]);
+            $sql->bindParam('aday', $aday);
+
+            
+
             
            $sql->execute();
 
@@ -58,6 +66,16 @@ $sqle = $conn->prepare("INSERT INTO email_addresses (id,email_address,date_creat
 
 
    
+$sqle = $conn->prepare("INSERT INTO email_addr_bean_rel (id,email_address_id,bean_id, bean_module,primary_address, date_created)
+            VALUES (:id,:id,:id,'Contacts',1, :date_entered)");
+
+            $sqle->bindParam('id', $id);
+            $sqle->bindParam('email_address', $_POST["email_address"]);
+            $sqle->bindParam('date_entered', $date);
+
+          $result=  $sqle->execute();
+
+
 
     
             if ($result) {
@@ -140,7 +158,7 @@ $sqle = $conn->prepare("INSERT INTO email_addresses (id,email_address,date_creat
 <div class="container my-4 ">
     
     <h1 class="text-center">Bilgi Al</h1> 
-    <form action="register.php" method="post">
+    <form action="adayregister.php" method="post">
     
         <div class="form-group"> 
             <label for="first_name">Ad</label>
@@ -171,6 +189,53 @@ $sqle = $conn->prepare("INSERT INTO email_addresses (id,email_address,date_creat
             name="phone_mobile" aria-describedby="emailHelp" required>    
         </div>
 
+<?php 
+
+$iller = array('Adana', 'Adıyaman', 'Afyon', 'Ağrı', 'Amasya', 'Ankara', 'Antalya', 'Artvin',
+'Aydın', 'Balıkesir', 'Bilecik', 'Bingöl', 'Bitlis', 'Bolu', 'Burdur', 'Bursa', 'Çanakkale',
+'Çankırı', 'Çorum', 'Denizli', 'Diyarbakır', 'Edirne', 'Elazığ', 'Erzincan', 'Erzurum', 'Eskişehir',
+'Gaziantep', 'Giresun', 'Gümüşhane', 'Hakkari', 'Hatay', 'Isparta', 'Mersin', 'İstanbul', 'İzmir', 
+'Kars', 'Kastamonu', 'Kayseri', 'Kırklareli', 'Kırşehir', 'Kocaeli', 'Konya', 'Kütahya', 'Malatya', 
+'Manisa', 'Kahramanmaraş', 'Mardin', 'Muğla', 'Muş', 'Nevşehir', 'Niğde', 'Ordu', 'Rize', 'Sakarya',
+'Samsun', 'Siirt', 'Sinop', 'Sivas', 'Tekirdağ', 'Tokat', 'Trabzon', 'Tunceli', 'Şanlıurfa', 'Uşak',
+'Van', 'Yozgat', 'Zonguldak', 'Aksaray', 'Bayburt', 'Karaman', 'Kırıkkale', 'Batman', 'Şırnak',
+'Bartın', 'Ardahan', 'Iğdır', 'Yalova', 'Karabük', 'Kilis', 'Osmaniye', 'Düzce','İl Seçiniz');
+?>
+ <label for="il">İl/Şehir seçiniz:</label>
+<?php 
+echo "<select name='secilenil'>";
+        foreach ($iller as $illers) {
+            echo "<option selected='selected' value='$illers'>$illers</option>";
+
+    }
+echo "</select>";
+
+?>
+  <br><br>
+  
+   <div class="form-group"> 
+            <label for="liseadi">Lise Adı</label> 
+        <input type="text" class="form-control" id="liseadi"
+            name="liseadi" aria-describedby="emailHelp" >    
+        </div>
+
+        <br>
+
+        <?php 
+
+$siniflar = array('1','2','3','4');
+?>
+ <label for="sinif">Sınıfınızı seçiniz:</label>
+<?php 
+echo "<select name='secilensinif'>";
+        foreach ($siniflar as $sinif) {
+            echo "<option selected='selected' value='$sinif'>$sinif</option>";
+
+    }
+echo "</select>";
+
+?>
+  <br><br>
      
             <script type="text/javascript">
         $(document).ready(function(){

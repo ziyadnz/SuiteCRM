@@ -22,6 +22,10 @@
     "sort-packages": true,
     "preferred-install": {
       "elasticsearch/elasticsearch": "dist"
+    },
+    "allow-plugins": {
+      "kylekatarnls/update-helper": true,
+      "wikimedia/composer-merge-plugin": true
     }
   },
   "require": {
